@@ -9,4 +9,10 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    arvore.cpp \
+    lista.cpp
+
+HEADERS += \
+    arvore.h \
+    lista.h
