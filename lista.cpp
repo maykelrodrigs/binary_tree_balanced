@@ -11,6 +11,7 @@ using namespace std;
 TLista* inicializaLista(){
     TLista *l = (TLista *) malloc(sizeof(TLista));
     l->inicio = NULL;
+    l->fim = NULL;
     return l;
 }
 
@@ -73,15 +74,21 @@ void imprimeLista(TFunc *f){
 
 /* ------------------------------------------------------ */
 
-void imprimeFuncionario(TFunc *f, char nome[]){
+void imprimeFuncionario(TLista *f, char nome[], int pag){
 
-    if(f != NULL){
-        if(strcmp(f->nome, nome) == 0){
-            cout<<endl<<"|> Matricula: "<<f->matricula<<endl;
-            cout<<"|> Salario: "<<f->salario<<endl;
-            cout<<"|> Genero: "<<f->genero<<endl<<endl;
+    TFunc *ini = f->inicio;
+    TFunc *fim = f->fim;
+
+    while(ini!=fim && ini!=NULL){
+        if(strcmp(ini->nome, nome) == 0){
+            cout<<endl<<"|> Matricula: "<<ini->matricula<<endl;
+            cout<<"|> Nome: "<<ini->nome<<endl;
+            cout<<"|> Salario: "<<ini->salario<<endl;
+            cout<<"|> Genero: "<<ini->genero<<endl<<endl;
+        }else{
+            cout<<ini->nome<<endl;
         }
-        imprimeFuncionario(f->prox, nome);
+        ini = ini->prox;
     }
 }
 
@@ -113,15 +120,20 @@ void inserePagina(TFunc *pag, TLista *p1, TLista *p2, TLista *p3, TLista *p4, TL
         }else if(retornaPagina(pag) == 2){
             if(p2->inicio == NULL)
                 p2->inicio = pag;
+                p1->fim = p2->inicio;
         }else if(retornaPagina(pag) == 3){
             if(p3->inicio == NULL)
                 p3->inicio = pag;
+                p2->fim = p3->inicio;
         }else if(retornaPagina(pag) == 4){
             if(p4->inicio == NULL)
                 p4->inicio = pag;
+                p3->fim = p4->inicio;
         }else{
             if(p5->inicio == NULL)
                 p5->inicio = pag;
+                p4->fim = p5->inicio;
+                p5->fim = NULL;
         }
 
         inserePagina(pag->prox, p1, p2, p3, p4, p5);
@@ -133,16 +145,20 @@ void inserePagina(TFunc *pag, TLista *p1, TLista *p2, TLista *p3, TLista *p4, TL
 
 void buscaFuncionario(TNodo *r, TLista *p1, TLista *p2, TLista *p3, TLista *p4, TLista *p5, char nome[]){
 
-    if(buscarPagina(r, nome) == 1)
-        imprimeFuncionario(p1->inicio, nome);
-    else if(buscarPagina(r, nome) == 2)
-        imprimeFuncionario(p2->inicio, nome);
-    else if(buscarPagina(r, nome) == 3)
-        imprimeFuncionario(p3->inicio, nome);
-    else if(buscarPagina(r, nome) == 4)
-        imprimeFuncionario(p4->inicio, nome);
-    else if(buscarPagina(r, nome) == 5)
-        imprimeFuncionario(p5->inicio, nome);
+    int ver = buscarPagina(r, nome);
+
+    if(ver == 1)
+        imprimeFuncionario(p1, nome, 1);
+    else if(ver == 2)
+        imprimeFuncionario(p2, nome, 2);
+    else if(ver == 3)
+        imprimeFuncionario(p3, nome, 3);
+    else if(ver == 4){
+        imprimeFuncionario(p4, nome, 4);
+    }
+    else if(ver == 5){
+        imprimeFuncionario(p5, nome, 5);
+    }
     else
         cout<<"\n**Funcionario não encontrado!"<<endl;
 

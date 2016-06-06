@@ -116,3 +116,41 @@ int buscarPagina(TNodo *r, char nome[]){
 }
 
 /* ------------------------------------------------------ */
+
+TNodo *excluiNodo(TNodo *r, char nome[]){
+
+    if (r == NULL)	{
+            return NULL;
+    } else if (strcmp(r->nome, nome) > 0){ // valor > argumento
+            r->esquerda = excluiNodo(r->esquerda, nome);
+
+    } else if (strcmp(r->nome, nome) < 0){ // valor < argumento
+            r->direita = excluiNodo(r->direita, nome);
+
+    } else {
+        if((r->esquerda == NULL) && (r->direita == NULL)){
+            free(r);
+            r = NULL;
+        } else if (r->esquerda == NULL){
+            TNodo *temp = r;
+            r = r->direita;
+            free(temp);
+        } else if (r->direita == NULL){
+            TNodo *temp = r;
+            r = r->esquerda;
+            free(temp);
+        } else {
+            TNodo *filho = r->esquerda;
+            while (filho->direita != NULL){
+                filho = filho->direita;
+            }
+
+            // Verificar se precisa atualizar o numero da página
+            strcpy(r->nome, filho->nome);
+            strcpy(filho->nome, nome);
+
+            r->esquerda = excluiNodo(r->esquerda, nome);
+        }
+    }
+    return r;
+}

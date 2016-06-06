@@ -14,7 +14,7 @@ typedef struct tipoFunc {
 } TFunc;
 
 typedef struct TipoLista {
-    TFunc *inicio;
+    TFunc *inicio, *fim;
     int quantidade;
 } TLista;
 
@@ -24,7 +24,7 @@ TLista* inicializaLista();
 int retornaPagina(TFunc *f);
 void ordenaLista(TLista *l);
 void imprimeLista(TFunc *f);
-void imprimeFuncionario(TFunc *f, char nome[]);
+void imprimeFuncionario(TLista *f, char nome[], int pag);
 void insereLista(TLista *l, TFunc *novo);
 void inserePagina(TFunc *pag, TLista *p1, TLista *p2, TLista *p3, TLista *p4, TLista *p5);
 void buscaFuncionario(TNodo *r, TLista *p1, TLista *p2, TLista *p3, TLista *p4, TLista *p5, char nome[]);

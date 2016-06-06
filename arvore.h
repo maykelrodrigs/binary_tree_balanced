@@ -24,6 +24,7 @@ void preOrdem(TNodo *r);
 void emOrdem(TNodo *r);
 void posOrdem(TNodo *r);
 void imprimeArvore(TNodo *r);
+TNodo *excluiNodo(TNodo *r, char nome[]);
 
 /* ------------------------------------------------------ */
 

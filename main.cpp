@@ -123,17 +123,18 @@ int main(){
 
     TNodo *r = inicializaArvore();
 
-    char nome[40];
     int cont = 0, esq, dir;
-    int continuar = 1;
     int tamanho = l->quantidade;
     int raiz = tamanho / 2;
+
     int qtd_nivel = contaNivel(raiz, 0);
     int *vet_nivel = divisaoNivel(qtd_nivel, raiz);
     int *vet_nome = inicializaVetor(tamanho);
+
     int qtd_filho = pow(2, qtd_nivel);
     int *vet_filho = inicializaVetor(qtd_filho);
     int *aux = inicializaVetor(qtd_filho);
+
     vet_filho[0] = raiz; // Inserir a raiz no vetor
     vet_nome[raiz] = 1; // Marcar a raiz como inseriada
     insereNodo(raiz, l, &r); // Inserir a raiz na árvore
@@ -158,45 +159,9 @@ int main(){
         cont = 0;
     }
 
-    do {
+    preencheArvore(vet_nome, tamanho, r, l);
 
-        continuar = menu();
-        switch(continuar){
-            case 1:
-                cout<<"\n|========|  Lista de funcionarios"<<endl;
-                imprimeLista(l->inicio);
-                break;
-            case 2:
-                cout<<"\n|========|  Informações do funcionario"<<endl;
-                cout<<"| Nome: ";
-                gets(nome);
-                buscaFuncionario(r, p1, p2, p3, p4, p5, nome);
-                break;
-            case 3:
-                break;
-            case 4:
-                cout<<"\n|========|  Pre Ordem"<<endl;
-                preOrdem(r);
-                break;
-            case 5:
-                cout<<"\n|========|  Em Ordem"<<endl;
-                emOrdem(r);
-                break;
-            case 6:
-                cout<<"\n|========|  Pos Ordem"<<endl;
-                posOrdem(r);
-                break;
-            case 7:
-                cout<<"\n|========|  Altura da arvore"<<endl;
-                cout<<alturaNo(r)<<endl;
-                break;
-            case 9:
-                exit(1);
-            default:
-                cout<<"\n**Opção inválida!"<<endl;
-                continuar = 1;
-        }
-        getchar();
-    }while(continuar);
+    buscaFuncionario(r, p1, p2, p3, p4, p5, "Silvio Santos");
+    excluiNodo(r, "Ze da Silva");
 
 }
